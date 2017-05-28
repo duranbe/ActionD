@@ -3,7 +3,7 @@
  
  Warning : Launcher.bat is only for  Windows Users
  
- Warning 2 : If there is the error # "ImportError: No module named Tkinter"
+ Warning 2 : If there is the error  "ImportError: No module named Tkinter"
  Edit the code and write "tkinter" instead of "Tkinter"
 
 >Developers : Durand Benoît, Le Ho Clement and Davoine Alexandre
