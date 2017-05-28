@@ -108,7 +108,7 @@ class attack(pygame.sprite.Sprite): #Class de l'attaque
 	
 class trap(pygame.sprite.Sprite):  #Classe du piège
 	def __init__(self,screen,x,y):
-		self.image = pygame.image.load('trap1.png')
+		self.image = pygame.image.load('trap.png')
 		self.screen =screen #Nom de la fenêtre où il sera affiché
 		self.x = x
 		self.y = y
