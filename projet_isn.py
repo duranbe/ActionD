@@ -2,11 +2,10 @@
 
 import pygame,random,meth_isn  # Python 3.2.4  # Pygame 1.9.2    
 from pygame import *   #On importe ce dont on a besoin  
-
 from meth_isn import *
 from tkinter import *
 
-window_menu = Tk() # On crée notre fenetre Tkinter pour le menu
+window_menu = Tk() # On cree notre fenetre Tkinter pour le menu
 window_menu.wm_title("Action Dragon") #On affiche sur l'entete "Action Dragon"
 
 def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en tant que  fonction pour l'incorporer dans le menu Tkinter
@@ -15,27 +14,41 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 	
 	pygame.mixer.init() # Lancement de la musique
 	pygame.mixer.music.load("Spirit.wav") # On charge la musique suivant
-	pygame.mixer.music.play(-1,0.0)
+	pygame.mixer.music.play(-1,0.0) # On lance la musique en boucle a partir du debut
 
-	window = pygame.display.set_mode((1280,640),FULLSCREEN) #1280 = 40*32 #640 = 32*20 # On met en plein écran
+	window = pygame.display.set_mode((1280,640),FULLSCREEN) #1280 = 40*32 #640 = 32*20 # On met en plein ecran
 	W = 1280
 	H = 640
-	floor = pygame.image.load("pedestal_full.png") # On charge les differentes images 
-	ice = pygame.image.load("ice1.png")
+	niv1_V = pygame.image.load("niv1_V.png")
+	niv1_T = pygame.image.load("niv1_T.png")
+	niv2_V = pygame.image.load("niv2_V.png")
+	niv2_T = pygame.image.load("niv2_T.png")
+	niv3_V = pygame.image.load("niv3_V.png")
+	niv3_T = pygame.image.load("niv3_T.png")
 	img_pause = pygame.image.load("pause.png")
-	img_vict = pygame.image.load("victory.png")
-	niveau_1=niveau('niv1',window) # On initialise le niveau
-	niveau_1.gen_niveau('niv1')
-	niveau_1.affiche_niveau(ice,floor)
+	niveaux=['niv1','niv2','niv3']
+	niv = niveau('niveaux',window)
 	joueur1=joueur(window,320,320)
 	joueur1.affiche()
 	pnj_liste = []
 	fle_liste = []
 	trap_liste = []
 	life=50 #On initialise la variable vie des pnj
-	sens_fle = "droite" # Sens de la fleche par défaut
+	sens_fle = "droite" # Sens de la fleche par defaut
+
+	sol = [niv1_V,niv2_V,niv3_V]
+	fond = [niv1_T,niv2_T,niv3_T]
+
+	i = random.randint(0,2)
+	niveaut=niveaux[i]
+	case = sol[i]
+	back = fond[i]
+	niv.gen_niveau(niveaut)
+	niv.affiche_niveau(case,back)
+
 	
 	
+	pygame.display.flip()
 	
 	def gen_trap():
  		for i in range(0,5):
@@ -70,9 +83,9 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
  		for i in range(0,10):
  			rand_x = random.randint(30,1260)
  			rand_y = random.randint(30,625)
- 			zob = pnj(window,rand_x,rand_y,life)
+ 			pn = pnj(window,rand_x,rand_y,life)
  			
- 			pnj_liste.append(zob)
+ 			pnj_liste.append(pn)
 
 	def check_collision(obj): #Verifie si le perso n'est pas en dehors de la fenetre
 
@@ -88,40 +101,40 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 	def affiche_pnj(): #permet le deplacement automatique des pnjs sans sortir de la fenetre
 		
 		
-		for zob in pnj_liste:
+		for pnj in pnj_liste:
 			test = random.randint(0,1) # 0 pour se deplacer horizontalement, 1 pour se deplacer verticalement
 			if(test==0):
-				if(zob.x<32):
-					zob.add_x =32
-					zob.add_y =0
-					zob.update(32,0) # Si on est trop proche du bord gauche, on va a droite
-				elif(zob.x>W-32):
-					zob.add_x =-32
-					zob.add_y =0
-					zob.update(-32,0) # Si on est trop proche du bord droit, on va a gauche
+				if(pnj.x<32):
+					pnj.add_x =32
+					pnj.add_y =0
+					pnj.update(32,0) # Si on est trop proche du bord gauche, on va a droite
+				elif(pnj.x>W-32):
+					pnj.add_x =-32
+					pnj.add_y =0
+					pnj.update(-32,0) # Si on est trop proche du bord droit, on va a gauche
 				else:
 					a = random.randint(-1,1)*32
-					zob.add_x = a
-					zob.add_y =	0
-					zob.update(a,0)# Sinon on fait ce qu'on veut
+					pnj.add_x = a
+					pnj.add_y =	0
+					pnj.update(a,0)# Sinon on fait ce qu'on veut
 			else:
-				if(zob.y<32):
-					zob.add_x =0
-					zob.add_y =32
-					zob.update(0,32) # Si on est trop proche du haut, on va en bas
-				elif(zob.y>H-32):
-					zob.add_x =0
-					zob.add_y =-32
-					zob.update(0,-32) # Si on est trop proche du bas, on va en haut
+				if(pnj.y<32):
+					pnj.add_x =0
+					pnj.add_y =32
+					pnj.update(0,32) # Si on est trop proche du haut, on va en bas
+				elif(pnj.y>H-32):
+					pnj.add_x =0
+					pnj.add_y =-32
+					pnj.update(0,-32) # Si on est trop proche du bas, on va en haut
 				else:
 					a = random.randint(-1,1)*32
-					zob.add_x = 0
-					zob.add_y =	a
-					zob.update(0,a) # Sinon on fait ce qu'on veut
-			check_collision(zob)
+					pnj.add_x = 0
+					pnj.add_y =	a
+					pnj.update(0,a) # Sinon on fait ce qu'on veut
+			check_collision(pnj)
 			for pou in pnj_liste:
-				check_col_pnj2(pou,zob)
-			zob.affiche()
+				check_col_pnj2(pou,pnj)
+			pnj.affiche()
 		
 
 	gen_trap()
@@ -168,7 +181,7 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 					continuer_pause = 1
 					while continuer_pause:
 						pygame.mixer.music.pause()
-						window.blit(img_pause,(125,125))
+						window.blit(img_pause,(0,0))
 						pygame.display.flip()
 						
 
@@ -224,6 +237,8 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 				for pnj_o in pnj_liste:
 					if pygame.sprite.collide_mask(pnj_o,fleche):
 						fleche.atk_time = 0
+						pnj_liste.remove(pnj_o)
+						
 				if fleche.portee>5:
 					fleche.atk_time=0
 					fleche.portee = 0
@@ -232,14 +247,18 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 		for pou in trap_liste:
 			check_life_col(pou,joueur1)
 		if joueur1.life <=0:
-				continuer = 0
+			continuer = 0
+		if pnj_liste ==[]:
+			continuer=0
+
+
 		
 		for pou in pnj_liste:
 				check_col_pnj_j(joueur1,pou)
 				for pou2 in pnj_liste:
 					check_col_pnj2(pou,pou2)
-					
-		niveau_1.affiche_niveau(ice,floor)
+
+		niv.affiche_niveau(case,back)
 		affiche_trap()
 		joueur1.affiche()
 		affiche_pnj()
@@ -252,14 +271,14 @@ def jeu(): # Fonction du jeu, il est en effet necessaire de definir le jeu en ta
 
 
 
-w = window_menu.winfo_screenwidth() #On récupère la largeur et la hauteur de l'écran
+w = window_menu.winfo_screenwidth() #On recupere la largeur et la hauteur de l'ecran
 h = window_menu.winfo_screenheight()
-window_menu.geometry("%dx%d+0+0" % (w, h)) # Pour localiser où est la fenetre (Dans notre cas : Plein Ecran)
+window_menu.geometry("%dx%d+0+0" % (w, h)) # Pour localiser ou est la fenetre (Dans notre cas : Plein Ecran)
 label = Label(window_menu,text="Menu") #On affiche un Titre
 bouton_play =Button(window_menu,height = 10,width = 15 ,text="Play",command=jeu)  # Bouton Play pour lancer le jeu
 bouton_quit =Button(window_menu,height = 10,width = 15 ,text="Exit",command=window_menu.quit) # Bouton Exit pour quitter le menu ( et donc le jeu)
 label.pack()
-bouton_play.grid(row=1,column=1) #On répartis les boutons dans une colonne
+bouton_play.grid(row=1,column=1) #On repartis les boutons dans une colonne
 bouton_quit.grid(row=2,column=1)
 bouton_play.pack()
 bouton_quit.pack()

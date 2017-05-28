@@ -5,9 +5,8 @@ from math import *
 class niveau(): # Classe du niveau
 	def __init__(self,niveau,screen): #Methode init niveau
 		self.niveau = niveau   #Nom du fichier texte qui contient le niveau
-		self.screen = screen #Nom de la fenêtre où il sera affiché
+		self.screen = screen #Nom de la fenetre ou il sera affiche
 		self.structure_niveau = 0
-		
 
 
 	def gen_niveau(self,niveau): #Methode pour generer le niveau et sa structure
@@ -42,7 +41,6 @@ class niveau(): # Classe du niveau
 				
 				img_x = img_x+32
 			img_y = img_y+32
-	
 
 
 		
@@ -50,7 +48,7 @@ class joueur(pygame.sprite.Sprite):   # Classe du du joueur
 	                          				
 	def __init__(self,screen,x,y):# methode principale du perso
 		self.image = pygame.image.load('draconian_green_m.png')# image
-		self.screen = screen #Nom de la fenêtre où il sera affiché
+		self.screen = screen #Nom de la fenetre ou il sera affiche
 		self.x = x  # position x
 		self.y = y # position y
 		self.life = 100
@@ -74,7 +72,7 @@ class joueur(pygame.sprite.Sprite):   # Classe du du joueur
 class attack(pygame.sprite.Sprite): #Class de l'attaque
 	def __init__(self,screen,x,y,lanceur,sens_fle,portee,atk_time):
 		self.image = pygame.image.load('arrow2.png')
-		self.screen = screen #Nom de la fenêtre où il sera affiché
+		self.screen = screen #Nom de la fenetre ou il sera affiche
 		self.x = x
 		self.y = y
 		self.sens_fle = sens_fle
@@ -106,10 +104,10 @@ class attack(pygame.sprite.Sprite): #Class de l'attaque
 		self.rect.bottomright = (self.x + self.image_w, self.y + self.image_h) 
 		self.mask = pygame.mask.from_surface(self.image) 
 	
-class trap(pygame.sprite.Sprite):  #Classe du piège
+class trap(pygame.sprite.Sprite):  #Classe du piege
 	def __init__(self,screen,x,y):
 		self.image = pygame.image.load('trap.png')
-		self.screen =screen #Nom de la fenêtre où il sera affiché
+		self.screen =screen #Nom de la fenetre ou il sera affiche
 		self.x = x
 		self.y = y
 		self.rect = self.image.get_rect()                   # rect = celui img
@@ -128,7 +126,7 @@ class pnj(pygame.sprite.Sprite):   # Classe du pnj
     				
 	def __init__(self,screen,x,y,life):# methode principale du perso
 		self.image = pygame.image.load('draconian_purple_f.png')# image
-		self.screen = screen #Nom de la fenêtre où il sera affiché
+		self.screen = screen #Nom de la fenetre ou il sera affiche
 		self.x = x  # position x
 		self.y = y # position y
 		self.add_x = 0
