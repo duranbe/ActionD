@@ -1,9 +1,13 @@
 
 
 import pygame,random,meth_isn  # Python 3.2.4  # Pygame 1.9.2    
-from pygame import *   #On importe ce dont on a besoin  
+from pygame import *   
 from meth_isn import *
-from tkinter import *
+
+try:
+    from Tkinter import *
+except ImportError:
+    from tkinter import *
 
 window_menu = Tk() # On cree notre fenetre Tkinter pour le menu
 window_menu.wm_title("Action Dragon") #On affiche sur l'entete "Action Dragon"
